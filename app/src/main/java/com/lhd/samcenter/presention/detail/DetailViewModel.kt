@@ -1,4 +1,4 @@
-package com.lhd.samcenter.presention.home
+package com.lhd.samcenter.presention.detail
 
 import android.util.Log
 import androidx.compose.runtime.State
@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
+class DetailViewModel @Inject constructor(
     private val repository: FakeStoreRepository,
     private val dataStore: DataStoreManager
 ) : BaseViewModel() {
@@ -29,9 +29,6 @@ class HomeViewModel @Inject constructor(
     val lsProduct: SnapshotStateList<Product>
         get() = _lsProduct
 
-//    init {
-//        fetchData()
-//    }
 
     override fun fetchData() {
         viewModelScope.launch(handler) {

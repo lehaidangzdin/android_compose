@@ -1,11 +1,14 @@
 package com.lhd.samcenter.navigation
 
+import HomeScreenV3
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.lhd.samcenter.presention.home.HomeScreen
-import com.lhd.samcenter.presention.home.HomeViewModel
+import com.lhd.samcenter.presention.detail.DetailScreen
+
 
 sealed class Screens(val route: String) {
     object Home : Screens("home_screen")
@@ -14,11 +17,20 @@ sealed class Screens(val route: String) {
 
 @Composable
 fun NavigationAppHost() {
-    val nav = rememberNavController()
+    val navController = rememberNavController()
+
     NavHost(
-        nav, "home_screen",
+        navController = navController, startDestination = "home_screen",
     ) {
-        composable(Screens.Home.route) { HomeScreen(nav) }
-//        composable(Screens.Detail.route) { DetailScreen(nav) }
+        composable(route = Screens.Home.route) { HomeScreenV3(navController) }
+        composable(Screens.Detail.route) { DetailScreen(navController) }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun SlideScreenPreview() {
+    MaterialTheme {
+        NavigationAppHost()
     }
 }
