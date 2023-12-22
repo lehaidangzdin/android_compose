@@ -11,6 +11,7 @@ import com.lhd.samcenter.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
@@ -24,6 +25,9 @@ class MyService : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         serviceScope.launch {
             pushNotification()
+            Log.e(TAG, "onStartCommand: start delay")
+            delay(5000)
+            Log.e(TAG, "onStartCommand: dasdasdas")
         }
         return START_STICKY
 
@@ -42,6 +46,8 @@ class MyService : Service() {
         notificationManager.createNotificationChannel(channel)
         val notification = NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle("My Service")
+            .setWhen(System.currentTimeMillis())
+            .setShowWhen(true)
             .setContentText("Service is running")
             .setSmallIcon(R.drawable.ic_notification)
             .build()

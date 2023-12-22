@@ -1,3 +1,4 @@
+
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -49,7 +50,7 @@ fun HomeScreenV3(
 
             val data = Data.Builder()
             val lifecycleOwner = LocalLifecycleOwner.current
-            val wokerManager = WorkManager.getInstance(context)
+            val workerManager = WorkManager.getInstance(context)
             data.apply {
                 putString("image_url", "https://s2.q4cdn.com/175719177/files/doc_presentations/Placeholder-PDF.pdf")
             }
@@ -63,8 +64,8 @@ fun HomeScreenV3(
                     .setInputData(data.build())
                     .build()
 
-                wokerManager.enqueue(imageDownloadRequest)
-                wokerManager.getWorkInfoByIdLiveData(imageDownloadRequest.id)
+                workerManager.enqueue(imageDownloadRequest)
+                workerManager.getWorkInfoByIdLiveData(imageDownloadRequest.id)
                     .observe(lifecycleOwner) {
                         it?.let {
                             when (it.state) {

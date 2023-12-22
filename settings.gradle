@@ -13,4 +13,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "samcenter"
-include ':app'
+include ':app:my_view'

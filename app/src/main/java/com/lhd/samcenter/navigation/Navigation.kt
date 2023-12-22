@@ -1,6 +1,6 @@
 package com.lhd.samcenter.navigation
 
-import HomeScreenV3
+import HomeScreenV2
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
@@ -20,9 +20,9 @@ fun NavigationAppHost() {
     val navController = rememberNavController()
 
     NavHost(
-        navController = navController, startDestination = "home_screen",
+        navController = navController, startDestination = Screens.Home.route,
     ) {
-        composable(route = Screens.Home.route) { HomeScreenV3(navController) }
+        composable(route = Screens.Home.route) { HomeScreenV2(navController) }
         composable(Screens.Detail.route) { DetailScreen(navController) }
     }
 }

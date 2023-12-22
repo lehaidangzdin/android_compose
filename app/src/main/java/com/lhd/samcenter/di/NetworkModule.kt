@@ -1,12 +1,17 @@
 package com.lhd.samcenter.di
 
+import android.app.Application
+import android.content.Context
 import com.lhd.samcenter.BuildConfig
 import com.lhd.samcenter.data.apis.FakeStoreApi
+import com.lhd.samcenter.data.repositories.AssetDownloadWorkerRepository
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ViewModelComponent
+import dagger.hilt.android.scopes.ViewModelScoped
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -27,6 +32,31 @@ class NetworkModule {
         return retrofit.create(FakeStoreApi::class.java)
     }
 
+
+    // download assets repository
+//    @Provides
+//    fun provideAssetRepository(context: Context): AssetDownloadWorkerRepository {
+//        return AssetDownloadWorkerRepository(context)
+//    }
+
+    @Module
+    @InstallIn(ViewModelComponent::class)
+    object AssetModule {
+
+        @Provides
+        @ViewModelScoped
+        fun provideContext(application: Application): Context {
+            return application.applicationContext
+        }
+
+        @Provides
+        @ViewModelScoped
+        fun provideAssetRepository(context: Context): AssetDownloadWorkerRepository {
+            return AssetDownloadWorkerRepository(context)
+        }
+    }
+
+
 //    @Provides
 //    @Singleton
 //    fun providerFirebaseStorage(): FirebaseFirestore {
@@ -43,7 +73,6 @@ class NetworkModule {
     ): Retrofit {
         return Retrofit.Builder().addConverterFactory(moshiConverterFactory)
             .baseUrl(BuildConfig.BASE_URL)
-//            .baseUrl(Constants.BASE_URL)
             .client(okHttpClient)
             .build()
     }
